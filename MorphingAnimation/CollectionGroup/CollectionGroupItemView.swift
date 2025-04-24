@@ -1,5 +1,5 @@
 //
-//  CollectionGroupButton.swift
+//  CollectionGroupItemView.swift
 //  MorphingAnimation
 //
 //  Created by Den Jo on 4/23/25.
@@ -7,13 +7,12 @@
 
 import UIKit
 
-final class CollectionGroupButton: UIControl {
+final class CollectionGroupItemView: UIControl {
     
     // MARK: - Value
-    // MARK: Public
-    var data = CollectionGroup()
-    
     // MARK: Private
+    private var item = CollectionGroupItem()
+    
     private var widthConstraint: NSLayoutConstraint?
     private var heightConstraint: NSLayoutConstraint?
     
@@ -52,8 +51,6 @@ final class CollectionGroupButton: UIControl {
     
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 13, weight: data.fontWeight)
-        label.textColor = data.textColor
         label.textAlignment = .center
         
         addSubview(label)
@@ -80,8 +77,6 @@ final class CollectionGroupButton: UIControl {
         let view = UIView()
         view.layer.cornerRadius = 36
         view.layer.zPosition = -10
-        view.layer.borderColor = data.borderColor
-        view.layer.borderWidth = data.borderWidth
         view.clipsToBounds = true
         
         addSubview(view)
@@ -102,16 +97,11 @@ final class CollectionGroupButton: UIControl {
     
     
     // MARK: - Initializer
-    init(data: CollectionGroup) {
+    required init(item: CollectionGroupItem) {
         super.init(frame: .zero)
         
-        self.data = data
         setViews()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setViews()
+        update(item: item)
     }
     
     required init?(coder: NSCoder) {
@@ -122,9 +112,20 @@ final class CollectionGroupButton: UIControl {
     
     // MARK: - Function
     // MARK: Public
-    func update(progress: CGFloat) {
-        let progress = max(0, min(1, progress))
+    func update(item: CollectionGroupItem) {
+        self.item = item
         
+        imageView.image = UIImage(named: item.title)
+        
+        label.text = item.title
+        label.font = .systemFont(ofSize: 13, weight: item.fontWeight)
+        label.textColor = item.textColor
+        
+        highlightView.layer.borderColor = item.borderColor
+        highlightView.layer.borderWidth = item.borderWidth
+    }
+    
+    func update(progress: CGFloat) {
         imageViewWidthConstraint?.constant = 64 - 36 * progress         // 64 ~ 28
         imageView.layer.cornerRadius = 32 - 18 * progress               // 32 ~ 14
         
@@ -134,7 +135,7 @@ final class CollectionGroupButton: UIControl {
         labelLeadingConstraint?.constant = 36 * progress                // 0 ~ 36
         labelTrailingConstraint?.constant = -8 * progress               // 0 ~ -8
         
-        label.font = .systemFont(ofSize: 13 + progress, weight: data.fontWeight) // 13 ~ 14
+        label.font = .systemFont(ofSize: 13 + progress, weight: item.fontWeight) // 13 ~ 14
         
         highlightViewBottomContraint?.constant = -37 + 29 * progress    // 37 ~ 8
         highlightViewLeadingContraint?.constant = 4 - 4 * progress      // 4 ~ 0
@@ -143,7 +144,7 @@ final class CollectionGroupButton: UIControl {
         highlightView.layer.borderWidth = 2 - 1 * progress              // 2 ~ 1
         highlightView.layer.cornerRadius = 36 - 18 * progress           // 36 ~ 18
         
-        if !data.isSelected {
+        if !item.isSelected {
             highlightView.layer.borderColor = UIColor(red: 0.9333333373, green: 0.9333333373, blue: 0.9333333373, alpha: progress).cgColor
         }
         
@@ -152,10 +153,6 @@ final class CollectionGroupButton: UIControl {
     
     // MARK: Private
     private func setViews() {
-        imageView.image = UIImage(named: data.title)
-        label.text = data.title
-        highlightView.layer.borderColor = data.borderColor
-        
         widthConstraint = widthAnchor.constraint(greaterThanOrEqualToConstant: 80)
         widthConstraint?.isActive = true
         

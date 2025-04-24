@@ -1,5 +1,5 @@
 //
-//  CollectionGroupsView.swift
+//  CollectionGroupsSectionView.swift
 //  MorphingAnimation
 //
 //  Created by Den Jo on 4/24/25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CollectionGroupsView: UIScrollView {
+final class CollectionGroupsSectionView: UIScrollView {
     
     // MARK: - Value
     // MARK: Private
@@ -26,12 +26,15 @@ final class CollectionGroupsView: UIScrollView {
         stackView.topAnchor.constraint(equalTo: frameLayoutGuide.topAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: frameLayoutGuide.bottomAnchor).isActive = true
         
-        let widthAchor = stackView.widthAnchor.constraint(equalTo: frameLayoutGuide.widthAnchor)
-        widthAchor.priority = .defaultLow
-        widthAchor.isActive = true
+//        let widthAchor = stackView.widthAnchor.constraint(equalTo: frameLayoutGuide.widthAnchor)
+//        widthAchor.priority = .defaultLow
+//        widthAchor.isActive = true
 
+        stackView.widthAnchor.constraint(greaterThanOrEqualTo: frameLayoutGuide.widthAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor, constant: 8).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor, constant: -8).isActive = true
+        
+        
         
         stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -41,7 +44,7 @@ final class CollectionGroupsView: UIScrollView {
         return stackView
     }()
     
-    private var buttons = [CollectionGroupButton]()
+    private var views = [CollectionGroupItemView]()
     
     
     // MARK: - Initializer
@@ -58,11 +61,11 @@ final class CollectionGroupsView: UIScrollView {
     
     // MARK: - Function
     // MARK: Public
-    func update(groups: [CollectionGroup]) {
+    func update(groups: [CollectionGroupItem]) {
         groups.forEach {
-            let button = CollectionGroupButton(data: $0)
-            buttons.append(button)
-            stackView.addArrangedSubview(button)
+            let view = CollectionGroupItemView(item: $0)
+            views.append(view)
+            stackView.addArrangedSubview(view)
         }
     }
     
@@ -70,7 +73,7 @@ final class CollectionGroupsView: UIScrollView {
         let progress = max(0, min(1, y / 66))   // 0 ~ 66
         
         heightContraint?.constant = 118 - 66 * progress
-        buttons.forEach { $0.update(progress: progress) }
+        views.forEach { $0.update(progress: progress) }
         
         layoutIfNeeded()
     }

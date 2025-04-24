@@ -15,12 +15,23 @@ struct ThirdCategoryItem {
 
 extension ThirdCategoryItem {
     
+    var width: CGFloat {
+        name.size(withAttributes: [.font : font]).width
+    }
+}
+
+extension ThirdCategoryItem {
+    
     var textColor: UIColor {
         isSelected ? #colorLiteral(red: 0.5512642264, green: 0.3013183177, blue: 0.7702756524, alpha: 1) : #colorLiteral(red: 0.2980392277, green: 0.2980392277, blue: 0.2980392277, alpha: 1)
     }
     
     var fontWeight: UIFont.Weight {
         isSelected ? .semibold : .regular
+    }
+    
+    var font: UIFont {
+        .systemFont(ofSize: 14, weight: fontWeight)
     }
 }
 
@@ -53,7 +64,6 @@ extension ThirdCategoryItem: CustomDebugStringConvertible {
         description
     }
 }
-
 
 extension ThirdCategoryItem: Identifiable {
     
@@ -102,7 +112,8 @@ extension ThirdCategoryItem: Codable {
 extension ThirdCategoryItem {
     
     static var categories: [ThirdCategoryItem] {
-        [ThirdCategoryItem(code: "1", name: "전체보기"), ThirdCategoryItem(code: "2", name: "Kurly's"), ThirdCategoryItem(code: "3", name: "PPUL"), ThirdCategoryItem(code: "4", name: "일상미소"),
+        [ThirdCategoryItem(code: "1", name: "전체보기", isSelected: true),
+         ThirdCategoryItem(code: "2", name: "Kurly's"), ThirdCategoryItem(code: "3", name: "PPUL"), ThirdCategoryItem(code: "4", name: "일상미소"),
          ThirdCategoryItem(code: "5", name: "KF365"), ThirdCategoryItem(code: "6", name: "KS365"), ThirdCategoryItem(code: "7", name: "Better Me"), ThirdCategoryItem(code: "8", name: "동물복지")]
     }
 }
