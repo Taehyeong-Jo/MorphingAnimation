@@ -75,8 +75,12 @@ final class ThirdCategoryItemView: UIControl {
     func update(progress: CGFloat) {
         topConstraint?.constant = topRange.startBound - topRange.length * progress
         bottomConstraint?.constant = bottomRange.startBound - bottomRange.length * progress
-        leadingConstraint?.constant = leadingRange.startBound - leadingRange.length * progress
+        leadingConstraint?.constant = leadingRange.startBound + leadingRange.length * progress
         trailingConstraint?.constant = trailingRange.startBound - trailingRange.length * progress
+        
+        
+        guard label.text == "전체보기" else { return }
+        print("\(leadingConstraint?.constant) ~ \(trailingConstraint?.constant)")
     }
     
     // MARK: Private

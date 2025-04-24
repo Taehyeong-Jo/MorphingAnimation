@@ -77,7 +77,7 @@ final class ViewController: UIViewController {
     // MARK: - Function
     // MARK: Private
     private func setView()  {
-        let categories = Array(ThirdCategoryItem.categories.prefix(8))
+        let categories = Array(ThirdCategoryItem.categories.prefix(3))
         
         let result = categories.count.quotientAndRemainder(dividingBy: 2)
         let row = result.quotient + result.remainder
@@ -128,7 +128,6 @@ final class ViewController: UIViewController {
                 
                 // Leading, Trailing
                 let remainder = i % 2
-                
                 view.leadingRange = ThirdCategoryRange(startBound: remainder == 0 ? 20 : inset, endBound: leadingInset)
                 view.trailingRange = ThirdCategoryRange(startBound: remainder == 0 ? -inset : -20, endBound: screenWidth - leadingInset - category.width)
                 
