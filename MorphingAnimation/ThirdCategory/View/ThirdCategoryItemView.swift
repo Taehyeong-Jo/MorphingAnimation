@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 final class ThirdCategoryItemView: UIControl {
     
     // MARK: - View
@@ -36,15 +37,13 @@ final class ThirdCategoryItemView: UIControl {
     // MARK: Public
     private(set) var width: CGFloat = 0
     
-    var topRange = ThirdCategoryRange()
-    var bottomRange = ThirdCategoryRange()
-    var leadingRange = ThirdCategoryRange()
-    var trailingRange = ThirdCategoryRange()
+    var topRange = AnimationRange()
+    var leadingRange = AnimationRange()
+    var widthRange = AnimationRange()
     
     var topConstraint: NSLayoutConstraint?
-    var bottomConstraint: NSLayoutConstraint?
     var leadingConstraint: NSLayoutConstraint?
-    var trailingConstraint: NSLayoutConstraint?
+    var widthConstraint: NSLayoutConstraint?
     
     
     // MARK: - Initializer
@@ -73,14 +72,9 @@ final class ThirdCategoryItemView: UIControl {
     }
     
     func update(progress: CGFloat) {
-        topConstraint?.constant = topRange.startBound - topRange.length * progress
-        bottomConstraint?.constant = bottomRange.startBound - bottomRange.length * progress
+        topConstraint?.constant = topRange.startBound + topRange.length * progress
         leadingConstraint?.constant = leadingRange.startBound + leadingRange.length * progress
-        trailingConstraint?.constant = trailingRange.startBound - trailingRange.length * progress
-        
-        
-        guard label.text == "전체보기" else { return }
-        print("\(leadingConstraint?.constant) ~ \(trailingConstraint?.constant)")
+        widthConstraint?.constant = widthRange.startBound + widthRange.length * progress
     }
     
     // MARK: Private

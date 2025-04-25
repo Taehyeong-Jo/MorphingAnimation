@@ -34,7 +34,7 @@ extension CollectionGroupItem {
 
 extension CollectionGroupItem {
     
-    static var groups: [CollectionGroupItem] {
+    static var items: [CollectionGroupItem] {
         [CollectionGroupItem(title: "TOP500",
                   imageURL: URL(string: "https://collection-image.kurly.com/hdims/resize/%5E%3E192x%3E192/cropcenter/192x192/quality/85/src/product-collections/10134/vLcoMNMMJuN3zUDTqzvTkYkGekE4f4dzX0SWJ2Cs.png"),
                   isSelected: true),

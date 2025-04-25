@@ -7,9 +7,13 @@
 
 import UIKit
 
+@MainActor
 final class CollectionGroupsSectionView: UIScrollView {
     
     // MARK: - Value
+    // MARK: Public
+    var animationRange = AnimationRange()
+    
     // MARK: Private
     private var heightContraint: NSLayoutConstraint?
     
@@ -26,15 +30,9 @@ final class CollectionGroupsSectionView: UIScrollView {
         stackView.topAnchor.constraint(equalTo: frameLayoutGuide.topAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: frameLayoutGuide.bottomAnchor).isActive = true
         
-//        let widthAchor = stackView.widthAnchor.constraint(equalTo: frameLayoutGuide.widthAnchor)
-//        widthAchor.priority = .defaultLow
-//        widthAchor.isActive = true
-
         stackView.widthAnchor.constraint(greaterThanOrEqualTo: frameLayoutGuide.widthAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor, constant: 8).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor, constant: -8).isActive = true
-        
-        
         
         stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
         stackView.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -61,8 +59,8 @@ final class CollectionGroupsSectionView: UIScrollView {
     
     // MARK: - Function
     // MARK: Public
-    func update(groups: [CollectionGroupItem]) {
-        groups.forEach {
+    func update(items: [CollectionGroupItem]) {
+        items.forEach {
             let view = CollectionGroupItemView(item: $0)
             views.append(view)
             stackView.addArrangedSubview(view)
@@ -70,7 +68,7 @@ final class CollectionGroupsSectionView: UIScrollView {
     }
     
     func handle(y: CGFloat) {
-        let progress = max(0, min(1, y / 66))   // 0 ~ 66
+        let progress = max(0, min(1, (y - animationRange.startBound) / 66))   // 0 ~ 66
         
         heightContraint?.constant = 118 - 66 * progress
         views.forEach { $0.update(progress: progress) }
@@ -89,4 +87,3 @@ final class CollectionGroupsSectionView: UIScrollView {
         heightContraint?.isActive = true
     }
 }
- 
