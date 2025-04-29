@@ -53,25 +53,20 @@ final class ViewController: UIViewController {
     // MARK: - Function
     // MARK: Private
     private func updateMagneticEffect(y: CGFloat) {
-        var offset: CGPoint {
-            if collectionGroupSectionView.animationRange ~= scrollView.contentOffset.y {
-                let length = collectionGroupSectionView.animationRange.length
-                let progress = round(max(0, min(1, (scrollView.contentOffset.y - collectionGroupSectionView.animationRange.startBound) / length)))
-                
-                return CGPoint(x: 0, y: progress == 0 ? collectionGroupSectionView.animationRange.startBound : collectionGroupSectionView.animationRange.endBound)
-                
-            } else if thirdCategorySectionView.animationRange ~= scrollView.contentOffset.y {
-                let length = thirdCategorySectionView.animationRange.length
-                let progress = round(max(0, min(1, (scrollView.contentOffset.y - thirdCategorySectionView.animationRange.startBound) / length)))
-                
-                return CGPoint(x: 0, y: progress == 0 ? thirdCategorySectionView.animationRange.startBound : thirdCategorySectionView.animationRange.endBound)
-                
-            } else {
-                return .zero
-            }
-        }
-        
-        scrollView.setContentOffset(offset, animated: true)
+        if collectionGroupSectionView.animationRange ~= scrollView.contentOffset.y {
+            let length = collectionGroupSectionView.animationRange.length
+            let progress = round(max(0, min(1, (scrollView.contentOffset.y - collectionGroupSectionView.animationRange.startBound) / length)))
+            
+            let offset = CGPoint(x: 0, y: progress == 0 ? collectionGroupSectionView.animationRange.startBound : collectionGroupSectionView.animationRange.endBound)
+            scrollView.setContentOffset(offset, animated: true)
+            
+        } else if thirdCategorySectionView.animationRange ~= scrollView.contentOffset.y {
+            let length = thirdCategorySectionView.animationRange.length
+            let progress = round(max(0, min(1, (scrollView.contentOffset.y - thirdCategorySectionView.animationRange.startBound) / length)))
+            
+            let offset = CGPoint(x: 0, y: progress == 0 ? thirdCategorySectionView.animationRange.startBound : thirdCategorySectionView.animationRange.endBound)
+            scrollView.setContentOffset(offset, animated: true)
+        } 
     }
 }
 
