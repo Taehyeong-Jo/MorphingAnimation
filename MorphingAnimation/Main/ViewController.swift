@@ -35,7 +35,6 @@ final class ViewController: UIViewController {
         
         return sectionView
     }()
-    
      
     
     // MARK: - View Life Cycle
@@ -66,7 +65,7 @@ final class ViewController: UIViewController {
             
             let offset = CGPoint(x: 0, y: progress == 0 ? thirdCategorySectionView.animationRange.startBound : thirdCategorySectionView.animationRange.endBound)
             scrollView.setContentOffset(offset, animated: true)
-        } 
+        }
     }
 }
 
