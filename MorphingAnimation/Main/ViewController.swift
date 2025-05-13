@@ -22,6 +22,7 @@ final class ViewController: UIViewController {
         collectionGroupsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         collectionGroupsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         collectionGroupsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        
         return collectionGroupsView
     }()
     
